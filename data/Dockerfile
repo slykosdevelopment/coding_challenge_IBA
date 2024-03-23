@@ -4,7 +4,7 @@ COPY main.py /app/
 
 WORKDIR /app
 
-RUN pip install fastapi
+RUN pip install fastapi uvicorn
 
 EXPOSE 8000
 

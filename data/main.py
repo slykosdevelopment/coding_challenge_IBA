@@ -18,17 +18,19 @@ def getProcessedSignalsList():
     signal_list=getRawSignalsList()
 
     for record in signal_list:
-        this_record_keywords_id=record.pop()
-        this_record_keywords=[]
-        for car in this_record_keywords_id:
-            if car.isdigit():
-                this_record_keywords.append(findKeyWord(keywords_list, car))
-        record.append(this_record_keywords)
+        if len(record)==6:
+            this_record_keywords_id=record.pop()
+            this_record_keywords=[]
+            for car in this_record_keywords_id:
+                if car.isdigit():
+                    this_record_keywords.append(findKeyWord(keywords_list, car))
+            record.append(this_record_keywords)
+        else:
+            del record
     return signal_list
 
 def findKeyWord(keywords_list, keyword_id):
-    #return keywords_list[int(keyword_id)-1]
-    return int(keyword_id)
+    return keywords_list[int(keyword_id)-1][1]
 
 
 @app.get("/")

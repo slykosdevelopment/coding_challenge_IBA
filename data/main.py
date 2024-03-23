@@ -25,6 +25,15 @@ def getProcessedSignalsList():
 
     return processed_signals_list
 
+def getGivenProcessedSignalList(node_id):
+    keywords_list=getRawKeywordsList()
+    signal_list=getRawSignalsList()
+
+
+    for signal in signal_list:
+        if (signal[0]==node_id):
+            return processRecord(signal, keywords_list)
+    return None
 
 def processRecord(record, keywords_list):
     new_record=[]
@@ -48,7 +57,9 @@ def findKeyWord(keywords_list, keyword_id):
 @app.get("/")
 async def root():
 
-    return {"debug" : getProcessedSignalsList()}
+    #return {"1" : getProcessedSignalsList()}
+    return {"2" : getGivenProcessedSignalList("ns=6;s=StarGateway:Shaco.Jinx.CU.AD_AspnW_zEyGUTZkYb")}
+
     #return {"debug" : getRawKeywordsList()}
     #return {"debug" : getRawSignalsList()}
 

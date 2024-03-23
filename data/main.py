@@ -2,17 +2,17 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
-def readFile(filename):
+def readCSV(filename):
     f=open(filename)
     content=f.read()
-    return [line for line in content.split('\n')]
+    return [line.split(",") for line in content.split('\n')][1:-1]
 
 def getSignalsList():
-    res=readFile("signals.csv")
+    res=readCSV("signals.csv")
     return res
 
 def getKeywordsList():
-    res=readFile("keywords.csv")
+    res=readCSV("keywords.csv")
     return res
 
 @app.get("/")
@@ -20,6 +20,7 @@ async def root():
 
 
     return {"debug" : getKeywordsList()}
+    #return {"debug" : getSignalsList()}
 
     """
     signals_list=["testa","testb"]

@@ -29,7 +29,6 @@ def getGivenProcessedSignalList(node_id):
     keywords_list=getRawKeywordsList()
     signal_list=getRawSignalsList()
 
-
     for signal in signal_list:
         if (signal[0]==node_id):
             return processRecord(signal, keywords_list)
@@ -54,21 +53,22 @@ def findKeyWord(keywords_list, keyword_id):
     return keywords_list[int(keyword_id)-1][1]
 
 
+
 @app.get("/")
 async def root():
 
-    #return {"1" : getProcessedSignalsList()}
-    return {"2" : getGivenProcessedSignalList("ns=6;s=StarGateway:Shaco.Jinx.CU.AD_AspnW_zEyGUTZkYb")}
+    return ["Welcome to the API. Use one of the two endpoints available to use the methods :","get_all_signals","get_by_id"]
 
-    #return {"debug" : getRawKeywordsList()}
-    #return {"debug" : getRawSignalsList()}
 
-    """
-    signals_list=["testa","testb"]
-    specific_signal="testc"
-    
-    return {
-        "List of signals": signals_list,
-        "Specific signal given its node id ":specific_signal
-    }
-    """
+@app.get("/get_all_signals")
+async def root():
+
+    return getProcessedSignalsList()
+
+
+@app.get("/get_by_id/{item_id}")
+async def root(item_id):
+    #return {"2" : getGivenProcessedSignalList("ns=6;s=StarGateway:Shaco.Jinx.CU.AD_AspnW_zEyGUTZkYb")}
+    return getGivenProcessedSignalList(item_id)
+    #ns=6;s=StarGateway:Shaco.Jinx.CU.AD_AspnW_zEyGUTZkYb
+

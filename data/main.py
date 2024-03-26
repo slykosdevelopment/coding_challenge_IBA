@@ -28,7 +28,5 @@ async def root():
 
 @app.get("/get_by_id/{item_id}")
 async def root(item_id):
-    #"ns=6;s=StarGateway:Shaco.Jinx.CU.AD_AspnW_zEyGUTZkYb"
-    #return getGivenProcessedSignalList(item_id)
-    return None
+    return execureRequestOnDB('SELECT * FROM signals WHERE node_id="'+item_id+'"')
 

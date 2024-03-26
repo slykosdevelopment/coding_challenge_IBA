@@ -3,8 +3,6 @@ import sqlite3
 
 app = FastAPI()
 
-
-
 def execureRequestOnDB(request):
     conn = sqlite3.connect('signals.db')
 
@@ -30,3 +28,4 @@ async def root():
 async def root(item_id):
     return execureRequestOnDB('SELECT * FROM signals WHERE node_id="'+item_id+'"')
 
+#http://localhost:8080/get_by_id/ns=6;s=StarGateway:Shaco.Jinx.CU.AL_fOndt_KEPXQlFdrS

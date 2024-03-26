@@ -17,12 +17,33 @@ cur.execute('''CREATE TABLE IF NOT EXISTS signals (
 
 
 # fill data table
-#test value. TODO : eead csv and add for each
-cur.execute("INSERT INTO signals (node_id, sampling_interval_ms, deadband_value, deadband_type, active, keywords) VALUES (?, ?, ?, ?, ?, ?)", ("ns=6;s=StarGateway:Shaco.Jinx.CU.AL_fOndt_KEPXQlFdRS", 500,88, "ABSOLUTE",1,"[3;4]"))
-cur.execute("INSERT INTO signals (node_id, sampling_interval_ms, deadband_value, deadband_type, active, keywords) VALUES (?, ?, ?, ?, ?, ?)", ("ns=6;s=StarGateway:Shaco.Jinx.CU.AL_fOndt_KEPXQlFdrS", 500,89, "ABSOLUTE",0,"[1;3;4]"))
+signals=getProcessedSignalsList()
 
+for signal in signals:
+
+    if len(signal)==6:
+
+        this_request_data=[]
+
+        for i in range (6):
+            #TODO change this
+            if (i==1 or i==2 or i==4):
+                if (signal[i]!=''):
+                    this_request_data.append(int(signal[i]))
+                else:
+                    this_request_data.append(1)
+            elif (i==5):
+                this_request_data.append(str(signal[i]))
+
+            else:
+                if (signal[i]!=''):
+                    this_request_data.append(signal[i])
+                else:
+                    this_request_data.append("0")
+
+        cur.execute("INSERT INTO signals (node_id, sampling_interval_ms, deadband_value, deadband_type, active, keywords) VALUES (?, ?, ?, ?, ?, ?)",tuple(this_request_data))
+    
 conn.commit()
-
 
 
 # Display database

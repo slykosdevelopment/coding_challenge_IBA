@@ -1,4 +1,6 @@
 import sqlite3
+from processRecordsFromCSV import *
+
 
 conn = sqlite3.connect('signals.db')
 

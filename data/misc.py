@@ -1,8 +1,12 @@
+"""
+Difference between processed and raw : processed have the index of keywords replaced by their names to make it easily readable
 
+"""
 
 def readCSV(filename):
     f=open(filename)
     content=f.read()
+    f.close()
     return [line.split(",") for line in content.split('\n')][1:-1]
 
 def getRawSignalsList():
@@ -33,7 +37,6 @@ def getGivenProcessedSignalList(node_id):
     return None
 
 def processRecord(record, keywords_list):
-    new_record=[]
 
     if len(record)==6:
         new_record=record[:5][::]
@@ -43,9 +46,9 @@ def processRecord(record, keywords_list):
             if car.isdigit():
                 this_record_keywords.append(findKeyWord(keywords_list, car))
         new_record.append(this_record_keywords)
+        return new_record
     else:
-        new_record=None
-    return new_record
+        return None
 
 def findKeyWord(keywords_list, keyword_id):
     return keywords_list[int(keyword_id)-1][1]

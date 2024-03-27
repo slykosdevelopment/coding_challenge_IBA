@@ -3,12 +3,19 @@ import sqlite3
 
 app = FastAPI()
 
-def execureRequestOnDB(request):
+def executeRequestOnDB(request,values=None):
     conn = sqlite3.connect('signals.db')
 
     cur = conn.cursor()
 
-    cur.execute(request)
+    if values:
+        cur.execute(request,values)
+
+        conn.commit()
+
+    else:
+        cur.execute(request)
+
     rows = cur.fetchall()
 
     conn.close()
@@ -22,10 +29,12 @@ async def root():
 
 @app.get("/get_all_signals")
 async def root():
-    return execureRequestOnDB("SELECT * FROM signals")
+    return executeRequestOnDB("SELECT * FROM signals")
 
 @app.get("/get_by_id/{item_id}")
 async def root(item_id):
-    return execureRequestOnDB('SELECT * FROM signals WHERE node_id="'+item_id+'"')
+    return executeRequestOnDB('SELECT * FROM signals WHERE node_id="'+item_id+'"')
 
-#http://localhost:8080/get_by_id/ns=6;s=StarGateway:Shaco.Jinx.CU.AL_fOndt_KEPXQlFdrS
+@app.post("/create_new")
+async def root():
+    return executeRequestOnDB("INSERT INTO signals (node_id, sampling_interval_ms, deadband_value, deadband_type, active, keywords) VALUES (?, ?, ?, ?, ?, ?)", ('test',2,3,'4',5,'6'))

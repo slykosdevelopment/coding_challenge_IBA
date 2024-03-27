@@ -21,6 +21,7 @@ signals=getProcessedSignalsList()
 
 
 for signal in signals:
+    print(signal)
     if len(signal)==6:
         cur.execute("INSERT INTO signals (node_id, sampling_interval_ms, deadband_value, deadband_type, active, keywords) VALUES (?, ?, ?, ?, ?, ?)",tuple(signal))
     

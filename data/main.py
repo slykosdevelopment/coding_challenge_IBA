@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import Request,FastAPI
 import sqlite3
 
 app = FastAPI()
@@ -36,5 +36,10 @@ async def root(item_id):
     return executeRequestOnDB('SELECT * FROM signals WHERE node_id="'+item_id+'"')
 
 @app.post("/create_new")
-async def root():
-    return executeRequestOnDB("INSERT INTO signals (node_id, sampling_interval_ms, deadband_value, deadband_type, active, keywords) VALUES (?, ?, ?, ?, ?, ?)", ('test',2,3,'4',5,'6'))
+async def root(request: Request):
+
+    req_json=await request.json()
+
+    args=(req_json['node_id'], req_json['sampling_interval_ms'], req_json['deadband_value'], req_json['deadband_type'], req_json['active'], req_json['keywords'])
+    
+    return executeRequestOnDB("INSERT INTO signals (node_id, sampling_interval_ms, deadband_value, deadband_type, active, keywords) VALUES (?, ?, ?, ?, ?, ?)", args)

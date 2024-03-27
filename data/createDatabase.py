@@ -19,26 +19,10 @@ cur.execute('''CREATE TABLE IF NOT EXISTS signals (
 # fill data table
 signals=getProcessedSignalsList()
 
-data_types=[str, int,int, str, int, str]
 
 for signal in signals:
-
     if len(signal)==6:
-
-        this_request_data=[]
-
-        for i in range (6):
-            if (data_types[i]==int):
-                if signal[i].isdigit():
-                    this_request_data.append(int(signal[i]))
-                else:
-                    this_request_data.append(-1)
-
-            else:
-                this_request_data.append(str(signal[i]))
-
-
-        cur.execute("INSERT INTO signals (node_id, sampling_interval_ms, deadband_value, deadband_type, active, keywords) VALUES (?, ?, ?, ?, ?, ?)",tuple(this_request_data))
+        cur.execute("INSERT INTO signals (node_id, sampling_interval_ms, deadband_value, deadband_type, active, keywords) VALUES (?, ?, ?, ?, ?, ?)",tuple(signal))
     
 conn.commit()
 

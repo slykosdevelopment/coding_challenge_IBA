@@ -39,13 +39,29 @@ def getGivenProcessedSignalList(node_id):
 def processRecord(record, keywords_list):
 
     if len(record)==6:
-        new_record=record[:5][::]
-        this_record_keywords_id=record[-1]
-        this_record_keywords=[]
-        for car in this_record_keywords_id:
-            if car.isdigit():
-                this_record_keywords.append(findKeyWord(keywords_list, car))
-        new_record.append(this_record_keywords)
+        data_types=[str, int,int, str, int, str]
+        new_record=[]
+
+        for i in range (6):
+
+            if (data_types[i]==int):
+                if record[i].isdigit():
+                    new_record.append(int(record[i]))
+                else:
+                    new_record.append(-1)
+
+            elif i==5:
+                keywords_lst=[]
+                
+                for car in record[5].strip('[]').split(";"):
+                    if len(car)>0:
+                        keywords_lst.append(findKeyWord(keywords_list, car))
+
+                new_record.append(", ".join(keywords_lst))
+
+            else:
+                new_record.append(str(record[i]))
+
         return new_record
     else:
         return None

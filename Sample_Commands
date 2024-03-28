@@ -1,0 +1,13 @@
+
+get by id (in browser)
+	http://localhost:8080/get_by_id/ns=6;s=StarGateway:Shaco.Jinx.CU.AL_fOndt_KEPXQlFdrS
+
+get all signals (in browser)
+	http://localhost:8080/get_all_signals
+
+insert a new signal  (in terminal):
+	curl -X POST http://localhost:8080/create_new -H "Content-Type: application/json" -d '{"node_id":"ns=6;s=StarGateway:Shaco.Jinx.CU.AC_DKLsd_TUFqHJPgxl", "sampling_interval_ms":500, "deadband_value":88, "deadband_type":"ABSOLUTE", "active":1, "keywords":"PS, DS"}'
+
+
+	then verify its presence with :
+	http://localhost:8080/get_by_id/ns=6;s=StarGateway:Shaco.Jinx.CU.AC_DKLsd_TUFqHJPgxl

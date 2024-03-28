@@ -8,5 +8,5 @@ elif [ "$1" == "launch_program" ]; then
     uvicorn main:app --host 0.0.0.0 --port 8000
 
 else
-    echo "specify aunch_program)"
+    echo "specify option"
 fi

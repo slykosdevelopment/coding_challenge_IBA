@@ -8,6 +8,4 @@ RUN pip install fastapi uvicorn
 
 EXPOSE 8000
 
-RUN chmod +x script_controller.sh
-
-ENTRYPOINT ["./script_controller.sh"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]

@@ -36,8 +36,7 @@ async def root(item_id):
     return executeRequestOnDB('SELECT * FROM signals WHERE node_id="'+item_id+'"')
 
 @app.post("/create_new")
-async def root(request: Request):
-
+async def root(request: Request): #create new signal, will first retrieve caracteristics of the signal then insert into db
     req_json=await request.json()
 
     args=(req_json['node_id'], req_json['sampling_interval_ms'], req_json['deadband_value'], req_json['deadband_type'], req_json['active'], req_json['keywords'])
